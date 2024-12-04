@@ -3,6 +3,8 @@ const resultDisplay = document.querySelector('.results')
 const width = 15
 const aliensRemoved = [] //garde trace des invader éliminés
 let currentShooterIndex = 202   //détermine position initiale du shooter
+let invadersID
+let isGoingRight = true
 
 
 //loop > create 225 square in the div grid
@@ -33,6 +35,17 @@ draw()
 
 squares[currentShooterIndex].classList.add('shooter')  //ajoute la classe shooter à la div
 
+function remove(){  //fonctionne comme le shooter mais doit le faire sur tout l'array des aliens
+    for (let i = 0; i < alienInvaders.length; i++) {
+        squares[alienInvaders[i]].classList.remove('invader')
+    }
+}
+
+
+
+
+
+
 function moveShooter(e){ //met e car utilise événement e dans la fonction
     squares[currentShooterIndex].classList.remove('shooter')
     switch(e.key){
@@ -47,3 +60,16 @@ function moveShooter(e){ //met e car utilise événement e dans la fonction
     // à chaque fois appuye sur une arrow key la fonction enléve la classe à la div actuelle et la remet à la div suivante
 }
 document.addEventListener('keydown', moveShooter)
+
+function moveInvaders(){
+    const leftEdge = alienInvaders[0] % width === 0 //si divisible par 15 et pas de reste peut pas aller plus à gauche
+    const rightEdge = alienInvaders[alienInvaders.length - 1] % width === width - 1 // détermine le côté droit
+    remove()
+
+    for(let i = 0; i < alienInvaders.length; i++) {
+        alienInvaders[i] += 1 //bouge de un vers la droite
+    }
+    draw() //redessince car totalement enlevé
+}
+
+invadersID = setInterval(moveInvaders, 600)
