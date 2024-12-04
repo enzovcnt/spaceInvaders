@@ -5,6 +5,7 @@ const aliensRemoved = [] //garde trace des invader éliminés
 let currentShooterIndex = 202   //détermine position initiale du shooter
 let invadersID
 let isGoingRight = true
+let direction = 1
 
 
 //loop > create 225 square in the div grid
@@ -66,10 +67,24 @@ function moveInvaders(){
     const rightEdge = alienInvaders[alienInvaders.length - 1] % width === width - 1 // détermine le côté droit
     remove()
 
-    for(let i = 0; i < alienInvaders.length; i++) {
-        alienInvaders[i] += 1 //bouge de un vers la droite
+    if (rightEdge && isGoingRight) { //si va au tout a droite ET continue à droite
+        for(let i = 0; i < alienInvaders.length; i++) {
+            alienInvaders[i] += width + 1 //mouvement dans index
+            direction = -1
+            isGoingRight = false //changer de direction
+        }
     }
-    draw() //redessince car totalement enlevé
+    if (leftEdge && !isGoingRight) { //si tout a gauche mais ne va pas à droite
+        for(let i = 0; i < alienInvaders.length; i++) {
+            alienInvaders[i] += width - 1
+            direction = 1
+            isGoingRight = true //changer de direction
+        }
+    }
+    for (let i = 0; i < alienInvaders.length; i++) { //lance la boucle
+        alienInvaders[i] += direction
+    }
+    draw() //redessine car totalement enlevé
 }
 
 invadersID = setInterval(moveInvaders, 600)
