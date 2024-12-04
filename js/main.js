@@ -74,7 +74,7 @@ function moveInvaders(){
             isGoingRight = false //changer de direction
         }
     }
-    if (leftEdge && !isGoingRight) { //si tout a gauche mais ne va pas à droite
+    if (leftEdge && !isGoingRight) { //si tout a gauche ET ne va pas à droite
         for(let i = 0; i < alienInvaders.length; i++) {
             alienInvaders[i] += width - 1
             direction = 1
@@ -85,6 +85,15 @@ function moveInvaders(){
         alienInvaders[i] += direction
     }
     draw() //redessine car totalement enlevé
+
+    if (squares[currentShooterIndex].classList.contains('invader')){ //si la bonne class touche le shooter
+        resultDisplay.innerText = 'Game Over!'
+        clearInterval(invadersID) //bouge plus
+    }
+
+    if (aliensRemoved.length === alienInvaders.length){
+        resultDisplay.innerText = 'You Win'
+    }
 }
 
 invadersID = setInterval(moveInvaders, 600)
