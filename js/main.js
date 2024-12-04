@@ -6,6 +6,7 @@ let currentShooterIndex = 202   //détermine position initiale du shooter
 let invadersID
 let isGoingRight = true
 let direction = 1
+let results = 0
 
 
 //loop > create 225 square in the div grid
@@ -22,7 +23,7 @@ const alienInvaders = [  //séléctionne les index pour leur donner une classe >
     0,1,2,3,4,5,6,7,7,8,9,
     15,16,17,18,19,20,21,22,23,24,
     30,31,32,33,34,35,36,37,38,39
-]
+] //tableau qui se déplace garde le même index pour les div
 
 function draw(){
     for (let i = 0; i < alienInvaders.length; i++) {
@@ -112,8 +113,14 @@ function shoot(e){
             squares[currentLaserIndex].classList.remove('laser')
             squares[currentLaserIndex].classList.add('boom')
 
-            setTimeout(() => squares[currentLaserIndex].classList.remove('boom'), 300)
+            setTimeout(() => squares[currentLaserIndex].classList.remove('boom'), 300) //faire disparaitre le boom
             clearInterval(laserId)
+
+            const alienRemoved = alienInvaders.indexOf(currentLaserIndex) //check si dans l'array currentLaser existe et si oui l'enlève
+            aliensRemoved.push(alienRemoved)
+            results++
+            resultDisplay.innerText = results
+            console.log(aliensRemoved)
         }
     }
     if (e.key === 'ArrowUp'){
