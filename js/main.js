@@ -37,8 +37,11 @@ function moveShooter(e){ //met e car utilise événement e dans la fonction
     squares[currentShooterIndex].classList.remove('shooter')
     switch(e.key){
         case 'ArrowLeft':
-            if(currentShooterIndex % width !== 0) currentShooterIndex -=1 //plus capable de bouger plus à gauche
-            break;
+            if (currentShooterIndex % width !== 0) currentShooterIndex -=1 //divisible par 15 et pas de reste donc ne passe pas cela et donc plus capable de bouger plus à gauche en faisant -1
+            break
+        case 'ArrowRight': // si  plus petit que 14 peut aller plus à gauche sinon peut pas
+            if (currentShooterIndex % width < width - 1) currentShooterIndex +=1 // ajoute la distance de déplacement = 1
+            break
     }
     squares[currentShooterIndex].classList.add('shooter')
     // à chaque fois appuye sur une arrow key la fonction enléve la classe à la div actuelle et la remet à la div suivante
