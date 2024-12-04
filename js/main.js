@@ -93,6 +93,7 @@ function moveInvaders(){
 
     if (aliensRemoved.length === alienInvaders.length){
         resultDisplay.innerText = 'You Win'
+        clearInterval(invadersID)
     }
 }
 
